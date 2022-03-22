@@ -65,10 +65,10 @@ Hook::add('app_init', function () {
         return;
     }
     // 当debug时不缓存配置
-    $config = cache('addons');
+    $config = Cache::get('addons');
     if (App::isDebug() || empty($config)) {
         // 读取插件目录及钩子列表
-        $base = get_class_methods("\\sys\\Addons");
+        $base = get_class_methods("\\qz\\Addons");
         // 读取插件目录中的php文件
         foreach (glob(ADDON_PATH . '*/*.php') as $addons_file) {
             // 格式化路径信息
@@ -126,10 +126,9 @@ Hook::add('action_begin', function () {
             $addons[$key] = array_filter(array_map('get_addons_class', $values));
             Hook::add($key, $addons[$key]);
         }
-        if(!App::isDebug()){
-            $initHook = Cache::get('initHook');
-            foreach ($initHook as $key => $values) {
-                if (is_string($values)) {
+        $initHook = Cache::get('initHook');
+        foreach ($initHook as $key => $values) {
+            if (is_string($values)) {
                     $values = explode(',', $values);
                 } else {
                     $values = (array)$values;
@@ -140,7 +139,6 @@ Hook::add('action_begin', function () {
             }
             $Hookinfo = array_merge($addons,$initHook);
             Cache::set('initHook', $Hookinfo);
-        }
     } else {
         Hook::import($data, false);
     }

@@ -7,7 +7,7 @@
  */
 
 
-namespace sys;
+namespace qz;
 
 use think\App;
 
