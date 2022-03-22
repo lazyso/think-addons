@@ -65,7 +65,10 @@ Hook::add('app_init', function () {
         return;
     }
     // 当debug时不缓存配置
-    $config = Cache::get('addons');
+    $config = App::isDebug() ? [] : Cache::get('addons',[]) ;
+    if(!is_array($config)){
+        $config = [];
+    }
     if (App::isDebug() || empty($config)) {
         // 读取插件目录及钩子列表
         $base = get_class_methods("\\qz\\Addons");
@@ -126,9 +129,10 @@ Hook::add('action_begin', function () {
             $addons[$key] = array_filter(array_map('get_addons_class', $values));
             Hook::add($key, $addons[$key]);
         }
-        $initHook = Cache::get('initHook');
-        foreach ($initHook as $key => $values) {
-            if (is_string($values)) {
+        $initHook = Cache::get('initHook',[]);
+        if($initHook){
+            foreach ($initHook as $key => $values) {
+                if (is_string($values)) {
                     $values = explode(',', $values);
                 } else {
                     $values = (array)$values;
@@ -139,6 +143,8 @@ Hook::add('action_begin', function () {
             }
             $Hookinfo = array_merge($addons,$initHook);
             Cache::set('initHook', $Hookinfo);
+        }
+
     } else {
         Hook::import($data, false);
     }
