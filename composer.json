@@ -1,7 +1,7 @@
 {
     "name": "lazyso/think-addons",
     "description": "修改版的think-addons插件类库适用于thinkphp5.1",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "license": "Apache-2.0",
     "autoload": {
         "psr-4": {
