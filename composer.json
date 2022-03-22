@@ -1,0 +1,21 @@
+{
+    "name": "lazyso/think-addons",
+    "description": "修改版的think-addons插件类库适用于thinkphp5.1",
+    "autoload": {
+        "psr-4": {
+            "sys\\": "src/"
+        },
+        "files": [
+            "src/common.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "xinsu",
+            "email": "wzq.0352@qq.com"
+        }
+    ],
+    "require": {
+        "topthink/framework": "5.1.*"
+    }
+}
