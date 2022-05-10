@@ -84,6 +84,13 @@ Hook::add('app_init', function () {
             if ($info['filename'] == ucfirst($name)) {
                 // 先判断该插件是否是启用状态
                 $infoSet = get_addons_info($name);
+                if(count($infoSet) < 1){
+                    return;
+                }
+                if(!array_key_exists('status',$infoSet)){
+                    die();
+                    $infoSet['status']=='0';
+                }
                 if((string) $infoSet['status'] == '1'){
                     // 读取出所有公共方法
                     $methods = (array)get_class_methods("\\addons\\" . $name . "\\" . $info['filename']);
