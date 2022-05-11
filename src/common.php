@@ -109,7 +109,9 @@ Hook::add('app_init', function () {
                             $config['hooks'][$hook][] = $name;
                         }
                     }
-                    Cache::set('initHook', $config['hooks']);
+                    if(isset($config['hooks'])){
+                        Cache::set('initHook', $config['hooks']);
+                    }
                     // 检测路由文件并进行注册
                     if(file_exists(ADDON_PATH.$name.DIRECTORY_SEPARATOR.'route.php')){
                         $file = require ADDON_PATH.$name.DIRECTORY_SEPARATOR.'route.php';
